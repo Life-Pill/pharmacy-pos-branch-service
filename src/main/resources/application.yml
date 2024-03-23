@@ -1,0 +1,33 @@
+
+spring:
+  application:
+    name: branch-microservice
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/branch-microservice
+    username: postgres
+    password: Prami@3990
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: true
+
+  security:
+    user:
+      name: lifepill
+      password: 12345
+
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+
+server:
+  port: 8083
+
+
+
+
