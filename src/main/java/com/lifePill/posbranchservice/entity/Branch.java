@@ -19,6 +19,8 @@ public class Branch {
     @Column(name = "brach_id")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int branchId;
+    @Column(name = "branch_code", nullable = false)
+    private String branchCode;
     @Column(name = "branch_name", length = 20, nullable = false)
     private String branchName;
     @Column(name = "branch_address", length = 100)

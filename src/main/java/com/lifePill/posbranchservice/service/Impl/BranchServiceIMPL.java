@@ -32,6 +32,7 @@ public class BranchServiceIMPL implements BranchService {
             byte[] imageBytes = SaveImageHelper.saveImage(image);
             Branch branch = new Branch(
                     branchDTO.getBranchId(),
+                    branchDTO.getBranchCode(),
                     branchDTO.getBranchName(),
                     branchDTO.getBranchAddress(),
                     branchDTO.getBranchContact(),
@@ -65,6 +66,7 @@ public class BranchServiceIMPL implements BranchService {
             for (Branch branch: getAllBranches){
                 BranchDTO cashierDTO = new BranchDTO(
                         branch.getBranchId(),
+                        branch.getBranchCode(),
                         branch.getBranchName(),
                         branch.getBranchAddress(),
                         branch.getBranchContact(),
@@ -93,6 +95,7 @@ public class BranchServiceIMPL implements BranchService {
             // can use mappers to easily below that task
             BranchDTO branchDTO  = new BranchDTO(
                    branch.getBranchId(),
+                    branch.getBranchCode(),
                     branch.getBranchName(),
                     branch.getBranchAddress(),
                     branch.getBranchContact(),
@@ -147,6 +150,33 @@ public class BranchServiceIMPL implements BranchService {
             return "updated";
         } else {
             throw new NotFoundException("No Branch found for that id");
+        }
+    }
+
+    @Override
+    public BranchDTO getBranchByCode(String branchCode) {
+        if (branchRepository.existsByBranchCode(branchCode)){
+            Branch branch = branchRepository.findByBranchCode(branchCode);
+
+            // can use mappers to easily below that task
+            BranchDTO branchDTO  = new BranchDTO(
+                    branch.getBranchId(),
+                    branch.getBranchCode(),
+                    branch.getBranchName(),
+                    branch.getBranchAddress(),
+                    branch.getBranchContact(),
+                    branch.getBranchFax(),
+                    branch.getBranchEmail(),
+                    branch.getBranchDescription(),
+                    branch.getBranchImage(),
+                    branch.isBranchStatus(),
+                    branch.getBranchLocation(),
+                    branch.getBranchCreatedOn(),
+                    branch.getBranchCreatedBy()
+            );
+            return branchDTO;
+        }else {
+            throw  new NotFoundException("No Branch found for that code");
         }
     }
 

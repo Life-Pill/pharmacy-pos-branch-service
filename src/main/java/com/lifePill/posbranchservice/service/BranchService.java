@@ -18,4 +18,6 @@ public interface BranchService {
 
     String deleteBranch(int branchId);
     String updateBranch(int branchId, BranchUpdateDTO branchUpdateDTO, MultipartFile image);
+
+    BranchDTO getBranchByCode(String branchCode);
 }

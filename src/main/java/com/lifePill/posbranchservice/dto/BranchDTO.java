@@ -9,6 +9,7 @@ import lombok.*;
 @ToString
 public class BranchDTO {
     private int branchId;
+    private String branchCode;
     private String branchName;
     private String branchAddress;
     private String branchContact;

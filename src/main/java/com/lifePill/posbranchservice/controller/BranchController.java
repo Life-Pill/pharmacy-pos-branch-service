@@ -43,6 +43,13 @@ public class BranchController {
         }
     }
 
+    @GetMapping(path = "/get-all-branches",params = "branchCode")
+    @Transactional
+    public BranchDTO getBranchByCode(@RequestParam(value = "branchCode") String branchCode) {
+        BranchDTO branchDTO = branchService.getBranchByCode(branchCode);
+        return branchDTO;
+    }
+
 
     @GetMapping(path = "/get-all-branches")
     public ResponseEntity<StandardResponse> getAllBranches() {

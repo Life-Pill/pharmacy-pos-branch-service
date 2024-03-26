@@ -9,4 +9,8 @@ import org.springframework.stereotype.Repository;
 @EnableJpaRepositories
 public interface BranchRepository extends JpaRepository<Branch,Integer> {
     boolean existsByBranchEmail(String branchEmail);
+
+    Branch findByBranchCode(String branchCode);
+
+    boolean existsByBranchCode(String branchCode);
 }
