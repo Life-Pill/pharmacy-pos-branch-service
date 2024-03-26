@@ -45,9 +45,9 @@ public class BranchController {
 
     @GetMapping(path = "/get-all-branches",params = "branchCode")
     @Transactional
-    public BranchDTO getBranchByCode(@RequestParam(value = "branchCode") String branchCode) {
+    public ResponseEntity<BranchDTO> getBranchByCode(@RequestParam(value = "branchCode") String branchCode) {
         BranchDTO branchDTO = branchService.getBranchByCode(branchCode);
-        return branchDTO;
+        return new ResponseEntity<>(branchDTO, HttpStatus.OK);
     }
 
 
