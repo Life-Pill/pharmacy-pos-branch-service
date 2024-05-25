@@ -1,7 +1,6 @@
-
 spring:
   application:
-    name: branch-microservice
+    name: BRANCH-SERVICE
   datasource:
     driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://localhost:5432/branch-microservice
@@ -26,8 +25,10 @@ spring:
       matching-strategy: ant_path_matcher
 
 server:
-  port: 8083
+  port: 8081
 
-
-
-
+eureka:
+  instance:
+    client:
+      serviceUrl:
+        defaultZone: http://localhost:8761/eureka/
