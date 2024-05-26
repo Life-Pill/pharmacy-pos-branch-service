@@ -31,7 +31,7 @@ public class BranchController {
      * It accepts a multipart file as the branch image and a BranchDTO object as the branch details.
      * It returns a response entity with a standard response containing the status code, message, and the saved branch details.
      */
-    @PostMapping(value = "/save", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PostMapping(value = "/save-branch", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<StandardResponse> saveBranch(@RequestParam("image") MultipartFile image, BranchDTO branchDTO) {
         branchService.saveBranch(branchDTO, image);
         return new ResponseEntity<StandardResponse>(

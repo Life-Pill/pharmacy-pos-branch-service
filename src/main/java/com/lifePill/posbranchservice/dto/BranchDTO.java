@@ -21,4 +21,3 @@ public class BranchDTO {
     private String branchCreatedOn;
     private String branchCreatedBy;
 }
-

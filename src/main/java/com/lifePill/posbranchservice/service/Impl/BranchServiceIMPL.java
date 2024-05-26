@@ -9,6 +9,8 @@ import com.lifePill.posbranchservice.helper.SaveImageHelper;
 import com.lifePill.posbranchservice.repository.BranchRepository;
 import com.lifePill.posbranchservice.service.BranchService;
 import jakarta.persistence.EntityNotFoundException;
+import lombok.AllArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -19,31 +21,23 @@ import java.util.Optional;
 
 
 @Service
+@AllArgsConstructor
 public class BranchServiceIMPL implements BranchService {
 
-    @Autowired
     private BranchRepository branchRepository;
+    private ModelMapper modelMapper;
 
     @Override
     public void saveBranch(BranchDTO branchDTO, MultipartFile image) {
         if (branchRepository.existsById(branchDTO.getBranchId()) || branchRepository.existsByBranchEmail(branchDTO.getBranchEmail())) {
-            throw new EntityDuplicationException("Branch already exists");
+            throw new EntityDuplicationException("Branch already exists for that id or email.");
         } else {
             byte[] imageBytes = SaveImageHelper.saveImage(image);
-            Branch branch = new Branch(
-                    branchDTO.getBranchId(),
-                    branchDTO.getBranchName(),
-                    branchDTO.getBranchAddress(),
-                    branchDTO.getBranchContact(),
-                    branchDTO.getBranchFax(),
-                    branchDTO.getBranchEmail(),
-                    branchDTO.getBranchDescription(),
-                    imageBytes,
-                    branchDTO.isBranchStatus(),
-                    branchDTO.getBranchLocation(),
-                    branchDTO.getBranchCreatedOn(),
-                    branchDTO.getBranchCreatedBy()
-            );
+            Branch branch = modelMapper.map(branchDTO, Branch.class);
+
+            //TODO:Retrieve and set the branchID from the branchDTO
+
+            branch.setBranchImage(imageBytes);
             branchRepository.save(branch);
         }
     }
