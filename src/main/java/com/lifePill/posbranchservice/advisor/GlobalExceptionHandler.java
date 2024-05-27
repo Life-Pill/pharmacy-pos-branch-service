@@ -31,7 +31,6 @@ public class GlobalExceptionHandler {
                 errorMessage = "An unexpected error occurred.";
         }
 
-
         return new ResponseEntity<>(
                 new StandardResponse(httpStatus.value(), "Error", errorMessage),
                 httpStatus
