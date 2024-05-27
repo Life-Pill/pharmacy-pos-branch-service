@@ -243,7 +243,6 @@ public class BranchServiceIMPL implements BranchService {
             }
             branch.setBranchStatus(branchUpdateDTO.isBranchStatus());
 
-
             branchRepository.save(branch);
         } else {
             throw new NotFoundException("No Branch found for that id");
