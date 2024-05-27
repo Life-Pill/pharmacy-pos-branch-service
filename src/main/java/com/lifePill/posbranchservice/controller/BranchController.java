@@ -2,6 +2,7 @@ package com.lifePill.posbranchservice.controller;
 
 import com.lifePill.posbranchservice.dto.BranchDTO;
 import com.lifePill.posbranchservice.dto.BranchUpdateDTO;
+import com.lifePill.posbranchservice.dto.EmployerDTO;
 import com.lifePill.posbranchservice.service.BranchService;
 import com.lifePill.posbranchservice.util.StandardResponse;
 import lombok.AllArgsConstructor;
@@ -135,4 +136,52 @@ public class BranchController {
                 HttpStatus.OK
         );
     }
+
+    /**
+     * Endpoint for updating the image of a branch.
+     *
+     * @param branchId The ID of the branch to update the image for
+     * @param image    The updated image file of the branch
+     * @return A message indicating that the branch image has been updated
+     */
+    @PutMapping(value = "/update-image/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @Transactional
+    public ResponseEntity<StandardResponse> updateBranchImage(
+            @PathVariable(value = "id") int branchId,
+            @RequestParam("image") MultipartFile image) {
+        branchService.updateBranchImage(branchId, image);
+        return new ResponseEntity<StandardResponse>(
+                new StandardResponse(
+                        201,
+                        "Branch id :" + branchId + ", Branch image has been successfully updated",
+                        image
+                ),
+                HttpStatus.OK
+        );
+    }
+
+    /**
+     * Endpoint for updating a branch without updating its image.
+     *
+     * @param branchId       The ID of the branch to be updated
+     * @param branchUpdateDTO The DTO containing updated branch details
+     * @return A message indicating that the branch has been updated
+     */
+    @PutMapping(value = "/update/{branchId}")
+    @Transactional
+    public ResponseEntity<StandardResponse> updateBranchWithoutImage(
+            @PathVariable(value = "branchId") int branchId,
+            @ModelAttribute BranchUpdateDTO branchUpdateDTO) {
+        branchService.updateBranchWithoutImage(branchId, branchUpdateDTO);
+        return new ResponseEntity<StandardResponse>(
+                new StandardResponse(
+                        201,
+                        "Branch id :" + branchId + ", Branch has been successfully updated",
+                        branchUpdateDTO
+                ),
+                HttpStatus.OK
+        );
+    }
+
+
 }
