@@ -17,7 +17,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -106,6 +105,11 @@ public class BranchServiceIMPL implements BranchService {
 
         updateBranchDetails(branch, branchUpdateDTO);
         branchRepository.save(branch);
+    }
+
+    @Override
+    public boolean checkBranchExistsById(int branchId) {
+        return branchRepository.existsById(branchId);
     }
 
     private BranchDTO convertToDTO(Branch branch) {

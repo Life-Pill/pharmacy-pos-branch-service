@@ -2,7 +2,6 @@ package com.lifePill.posbranchservice.controller;
 
 import com.lifePill.posbranchservice.dto.BranchDTO;
 import com.lifePill.posbranchservice.dto.BranchUpdateDTO;
-import com.lifePill.posbranchservice.dto.EmployerDTO;
 import com.lifePill.posbranchservice.service.BranchService;
 import com.lifePill.posbranchservice.util.StandardResponse;
 import lombok.AllArgsConstructor;
@@ -35,7 +34,7 @@ public class BranchController {
     @PostMapping(value = "/save-branch", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<StandardResponse> saveBranch(@RequestParam("image") MultipartFile image, BranchDTO branchDTO) {
         branchService.saveBranch(branchDTO, image);
-        return new ResponseEntity<StandardResponse>(
+        return new ResponseEntity<>(
                 new StandardResponse(
                         201,
                         "Branch has been successfully saved",
@@ -69,7 +68,7 @@ public class BranchController {
     @GetMapping(path = "/get-all-branches")
     public ResponseEntity<StandardResponse> getAllBranches() {
         List<BranchDTO> allBranches = branchService.getAllBranches();
-        return new ResponseEntity<StandardResponse>(
+        return new ResponseEntity<>(
                 new StandardResponse(
                         201,
                         "Successfully retrieve all branches",
@@ -87,7 +86,7 @@ public class BranchController {
     @Transactional
     public ResponseEntity<StandardResponse> getBranchById(@RequestParam(value = "branchId") int branchId) {
         BranchDTO branchDTO = branchService.getBranchById(branchId);
-        return new ResponseEntity<StandardResponse>(
+        return new ResponseEntity<>(
                 new StandardResponse(
                         201,
                         "Successfully retrieved branch by id",
@@ -104,7 +103,7 @@ public class BranchController {
     @DeleteMapping(path = "/delete-branch/{id}")
     public ResponseEntity<StandardResponse> deleteBranch(@PathVariable(value = "id") int branchId) {
         String deleted = branchService.deleteBranch(branchId);
-        return new ResponseEntity<StandardResponse>(
+        return new ResponseEntity<>(
                 new StandardResponse(
                         201,
                         "Branch id :" + branchId + ", Branch has been successfully deleted",
@@ -127,7 +126,7 @@ public class BranchController {
             BranchUpdateDTO branchUpdateDTO
     ) {
         branchService.updateBranch(branchId, branchUpdateDTO, image);
-        return new ResponseEntity<StandardResponse>(
+        return new ResponseEntity<>(
                 new StandardResponse(
                         201,
                         "Branch id :" + branchId + ", Branch has been successfully updated",
@@ -150,7 +149,7 @@ public class BranchController {
             @PathVariable(value = "id") int branchId,
             @RequestParam("image") MultipartFile image) {
         branchService.updateBranchImage(branchId, image);
-        return new ResponseEntity<StandardResponse>(
+        return new ResponseEntity<>(
                 new StandardResponse(
                         201,
                         "Branch id :" + branchId + ", Branch image has been successfully updated",
@@ -173,11 +172,27 @@ public class BranchController {
             @PathVariable(value = "branchId") int branchId,
             @ModelAttribute BranchUpdateDTO branchUpdateDTO) {
         branchService.updateBranchWithoutImage(branchId, branchUpdateDTO);
-        return new ResponseEntity<StandardResponse>(
+        return new ResponseEntity<>(
                 new StandardResponse(
                         201,
                         "Branch id :" + branchId + ", Branch has been successfully updated",
                         branchUpdateDTO
+                ),
+                HttpStatus.OK
+        );
+    }
+
+    @GetMapping(value = "/check-branch-exits-by-id", params = "branchId")
+    public ResponseEntity<StandardResponse> checkBranchExistsById(
+            @RequestParam(value = "branchId") int branchId
+    ) {
+        boolean exists = branchService.checkBranchExistsById(branchId);
+        String message = exists ? "Branch exists" : "Branch does not exist";
+        return new ResponseEntity<>(
+                new StandardResponse(
+                        201,
+                        message,
+                        exists
                 ),
                 HttpStatus.OK
         );
