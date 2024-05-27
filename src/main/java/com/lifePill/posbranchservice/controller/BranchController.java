@@ -160,5 +160,28 @@ public class BranchController {
         );
     }
 
+    /**
+     * Endpoint for updating a branch without updating its image.
+     *
+     * @param branchId       The ID of the branch to be updated
+     * @param branchUpdateDTO The DTO containing updated branch details
+     * @return A message indicating that the branch has been updated
+     */
+    @PutMapping(value = "/update/{branchId}")
+    @Transactional
+    public ResponseEntity<StandardResponse> updateBranchWithoutImage(
+            @PathVariable(value = "branchId") int branchId,
+            @ModelAttribute BranchUpdateDTO branchUpdateDTO) {
+        branchService.updateBranchWithoutImage(branchId, branchUpdateDTO);
+        return new ResponseEntity<StandardResponse>(
+                new StandardResponse(
+                        201,
+                        "Branch id :" + branchId + ", Branch has been successfully updated",
+                        branchUpdateDTO
+                ),
+                HttpStatus.OK
+        );
+    }
+
 
 }

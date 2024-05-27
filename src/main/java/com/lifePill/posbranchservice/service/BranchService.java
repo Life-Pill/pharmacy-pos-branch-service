@@ -21,4 +21,6 @@ public interface BranchService {
     String updateBranch(int branchId, BranchUpdateDTO branchUpdateDTO, MultipartFile image);
 
     void updateBranchImage(int branchId, MultipartFile image);
+
+    void updateBranchWithoutImage(int branchId, BranchUpdateDTO branchUpdateDTO);
 }
