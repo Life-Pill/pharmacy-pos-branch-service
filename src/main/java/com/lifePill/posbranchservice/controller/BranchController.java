@@ -137,4 +137,28 @@ public class BranchController {
         );
     }
 
+    /**
+     * Endpoint for updating the image of a branch.
+     *
+     * @param branchId The ID of the branch to update the image for
+     * @param image    The updated image file of the branch
+     * @return A message indicating that the branch image has been updated
+     */
+    @PutMapping(value = "/update-image/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @Transactional
+    public ResponseEntity<StandardResponse> updateBranchImage(
+            @PathVariable(value = "id") int branchId,
+            @RequestParam("image") MultipartFile image) {
+        branchService.updateBranchImage(branchId, image);
+        return new ResponseEntity<StandardResponse>(
+                new StandardResponse(
+                        201,
+                        "Branch id :" + branchId + ", Branch image has been successfully updated",
+                        image
+                ),
+                HttpStatus.OK
+        );
+    }
+
+
 }

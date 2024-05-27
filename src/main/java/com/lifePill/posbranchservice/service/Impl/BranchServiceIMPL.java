@@ -129,8 +129,30 @@ public class BranchServiceIMPL implements BranchService {
             if (branchUpdateDTO.getBranchName() != null) {
                 branch.setBranchName(branchUpdateDTO.getBranchName());
             }
+            if (branchUpdateDTO.getBranchAddress() != null) {
+                branch.setBranchAddress(branchUpdateDTO.getBranchAddress());
+            }
+            if (branchUpdateDTO.getBranchContact() != null) {
+                branch.setBranchContact(branchUpdateDTO.getBranchContact());
+            }
 
-            // Repeat the same pattern for other fields
+            if (branchUpdateDTO.getBranchFax() != null) {
+                branch.setBranchFax(branchUpdateDTO.getBranchFax());
+            }
+
+            if (branchUpdateDTO.getBranchEmail() != null) {
+                branch.setBranchEmail(branchUpdateDTO.getBranchEmail());
+            }
+
+            if (branchUpdateDTO.getBranchDescription() != null) {
+                branch.setBranchDescription(branchUpdateDTO.getBranchDescription());
+            }
+
+            if (branchUpdateDTO.getBranchLocation() != null) {
+                branch.setBranchLocation(branchUpdateDTO.getBranchLocation());
+            }
+
+
 
             if (image != null && !image.isEmpty()) {
                 byte[] imageBytes = SaveImageHelper.saveImage(image);
@@ -143,5 +165,34 @@ public class BranchServiceIMPL implements BranchService {
             throw new NotFoundException("No Branch found for that id");
         }
     }
+
+    /**
+     * Updates the image of a branch.
+     *
+     * @param branchId The ID of the branch to update.
+     * @param image    The new image file for the branch.
+     * @throws NotFoundException If the branch with the given ID is not found.
+     */
+    @Override
+    public void updateBranchImage(int branchId, MultipartFile image) {
+        if (!branchRepository.existsById(branchId)) {
+            throw new NotFoundException("Branch not found");
+        }
+
+        Optional<Branch> branchOptional = branchRepository.findById(branchId);
+        if (branchOptional.isPresent()) {
+            Branch branch = branchOptional.get();
+
+            if (image != null && !image.isEmpty()) {
+                byte[] imageBytes = SaveImageHelper.saveImage(image);
+                branch.setBranchImage(imageBytes);
+            }
+
+            branchRepository.save(branch);
+        } else {
+            throw new NotFoundException("No Branch found for that id");
+        }
+    }
+
 
 }
