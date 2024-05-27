@@ -32,7 +32,7 @@ public class Branch {
     @Column(name = "branch_description", length = 100)
     private String branchDescription;
     @Lob
-    @Column(name = "branch_image")
+    @Column(name = "branch_image",nullable = true)
     private byte[] branchImage;
     @Column(name = "branch_status", columnDefinition = "BOOLEAN default false")
     private boolean branchStatus;
