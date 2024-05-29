@@ -23,4 +23,6 @@ public interface BranchService {
     void updateBranchImage(int branchId, MultipartFile image);
 
     void updateBranchWithoutImage(int branchId, BranchUpdateDTO branchUpdateDTO);
+
+    boolean checkBranchExistsById(int branchId);
 }
