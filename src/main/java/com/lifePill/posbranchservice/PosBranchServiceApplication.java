@@ -26,7 +26,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 		),
 		externalDocs = @ExternalDocumentation(
 				description = "LifePill POS System Branch microservice REST API Documentation",
-				url = "http://localhost:8083/swagger-ui/index.html#/"
+				url = "http://localhost:8084/swagger-ui/index.html#/"
 		)
 )
 @SpringBootApplication
